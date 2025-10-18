@@ -1,150 +1,154 @@
-# **RSI Trading Bot**
+RSI Trading Bot
+A sophisticated automated trading bot for MetaTrader 5 that implements multiple RSI-based strategies with advanced risk management.
 
-A sophisticated automated trading bot for MetaTrader 5 that implements multiple RSI-based strategies with advanced risk management. Supports **EURUSD** and **XAUUSD** out of the box.
+Features
+Multiple RSI Strategies
 
----
+Overbought/Oversold detection
 
-## **Features**
+RSI Divergence identification
 
-- **Multiple RSI Strategies**
-  - Overbought/Oversold detection
-  - RSI Divergence identification
-  - Swing Failure Pattern recognition
-- **Advanced Risk Management**
-  - ATR-based Stop Loss and Take Profit
-  - 2% maximum risk per trade
-  - Trailing stop loss support
-  - Position size calculation
-- **Trend Confirmation**
-  - EMA-based trend filtering
-  - Configurable fast/slow EMA periods
-- **Live Trading**
-  - MT5 integration for live execution
-  - Supports **EURUSD** and **XAUUSD** (extensible)
-  - Maximum 1 position at a time
-- **Notifications**
-  - Telegram alerts for bot start/stop
-  - Trade open/close notifications
-  - Error alerts
-- **Fully Configurable**
-  - YAML-based configuration
-  - All parameters adjustable without code changes
-- **Robust Logging**
-  - Rotating log files
-  - Configurable log levels
-  - Console and file output
+Swing Failure Pattern recognition
 
----
+Advanced Risk Management
 
-## **Requirements**
+ATR-based Stop Loss and Take Profit
 
-- Python 3.8+
-- MetaTrader 5 terminal installed and logged in
-- Active MT5 trading account
-- Telegram bot (optional, for notifications)
+2% maximum risk per trade
 
----
+Trailing stop loss support
 
-## **Installation**
+Position size calculation
 
-1. **Clone or download the project**
-    ```bash
-    git clone https://github.com/your-org/rsi_trading_bot.git
-    cd rsi_trading_bot
-    ```
-    Or download the ZIP and extract.
+Trend Confirmation
 
-2. **Create and activate a virtual environment (recommended)**
-    ```bash
-    python -m venv .venv
-    # Windows
-    .venv\Scripts\activate
-    # macOS/Linux
-    source .venv/bin/activate
-    ```
+EMA-based trend filtering
 
-3. **Install Python dependencies**
-    ```bash
-    pip install -r requirements.txt
-    ```
+Configurable fast/slow EMA periods
 
-4. **Configure the bot**
-    - Edit the configuration:
-      ```bash
-      nano config/config.yaml
-      ```
-    - Provide:
-      - MT5 login, server, and (if needed) password
-      - Telegram bot token and chat ID (optional)
-      - Symbols: **EURUSD**, **XAUUSD**; timeframe; risk settings; ATR multipliers; EMA periods
+Live Trading
 
----
+MT5 integration for live execution
 
-## **Configuration**
+Supports EURUSD and XAUUSD (extensible)
 
-All settings are in `config/config.yaml`. Pre-configured for **EURUSD** and **XAUUSD**:
+Maximum 1 position at a time
 
-```yaml
-trading:
-  symbols: ["EURUSD", "XAUUSD"]   # Supported symbols
-  timeframe: "M15"
-  scan_interval_sec: 30
-  max_open_positions: 1
+Notifications
 
-risk:
-  risk_pct: 2.0
-  atr_period: 14
-  sl_atr_mult: 2.0
-  tp_atr_mult: 3.0
-  trailing_stop:
-    enabled: true
-    activation_atr_mult: 1.5
-    step_atr_mult: 0.5
+Telegram alerts for bot start/stop
 
-rsi_strategies:
-  overbought_oversold:
-    enabled: true
-    rsi_period: 14
-    overbought: 70
-    oversold: 30
-    weight: 1.0
-  divergence:
-    enabled: true
-    swing_lookback: 5
-    min_strength: 0.6
-    weight: 1.0
-  swing_failure:
-    enabled: true
-    lookback_bars: 10
-    weight: 1.0
-  confirmation:
-    min_total_weight: 1.5
-    size_multiplier_on_multi_confirm: 1.5
+Trade open/close notifications
 
-trend_filter:
-  enabled: true
-  ema_fast: 21
-  ema_slow: 50
+Error alerts
 
-mt5:
-  login: 12345678
-  server: "YourBroker-Server"
-  password: "YOUR_PASSWORD"
+Fully Configurable
 
-telegram:
-  enabled: false
-  bot_token: "123456:ABC-DEF..."
-  chat_id: "123456789"
-  notify:
-    startup: true
-    shutdown: true
-    trade_open: true
-    trade_close: true
-    errors: true
+YAML-based configuration
 
-logging:
-  level: "INFO"
-  file: "logs/bot.log"
-  rotate:
-    max_bytes: 10485760
-    backup_count: 5
+All parameters adjustable without code changes
+
+Robust Logging
+
+Rotating log files
+
+Configurable log levels
+
+Console and file output
+
+Installation
+Clone or download the project
+
+Install Python dependencies
+
+pip install -r requirements.txt
+Configure the bot
+
+Edit config/config.yaml
+
+Add your MT5 credentials
+
+Add your Telegram bot token and chat ID (optional)
+
+Adjust trading parameters as needed
+
+Configuration
+All settings are in config/config.yaml:
+
+Trading Settings: Symbols, timeframe, scan interval
+
+Risk Management: Risk percentage, ATR multipliers, trailing stops
+
+RSI Strategies: Enable/disable strategies, adjust weights
+
+Trend Confirmation: EMA settings
+
+MT5 Connection: Login credentials and server
+
+Telegram: Bot token and notification preferences
+
+Logging: Log levels and rotation settings
+
+Usage
+Windows (Git Bash/WSL)
+./script.sh
+Direct Python
+python src/main.py
+Project Structure
+rsi_trading_bot/
+├── config/
+│   └── config.yaml              # Configuration file
+├── src/
+│   ├── main.py                  # Entry point
+│   ├── bot.py                   # Main orchestrator
+│   ├── strategies/              # RSI strategy implementations
+│   ├── indicators/              # Technical indicators
+│   ├── trading/                 # MT5 connection & execution
+│   ├── notifications/           # Telegram notifications
+│   └── utils/                   # Utilities (config, logging)
+├── logs/                        # Log files
+├── script.sh                    # Startup script
+└── requirements.txt             # Python dependencies
+Strategy Logic
+The bot combines multiple RSI strategies:
+
+Overbought/Oversold: Traditional RSI levels (70/30)
+
+Divergence: Price vs RSI divergence detection
+
+Swing Failure: Failed breakout patterns
+
+When multiple strategies confirm the same direction, the bot can increase position size (configurable multiplier).
+
+Risk Management
+Maximum 2% account risk per trade
+
+ATR-based dynamic stop loss and take profit
+
+Trailing stop loss to lock in profits
+
+Position size automatically calculated based on account balance and risk
+
+Safety Features
+Maximum 1 open position at a time
+
+Graceful shutdown handling
+
+Error notifications via Telegram
+
+Comprehensive logging for audit trail
+
+Requirements
+Python 3.8+
+
+MetaTrader 5 terminal
+
+Active MT5 trading account
+
+Telegram bot (optional, for notifications)
+
+Disclaimer
+This bot is for educational purposes. Trading involves risk. Always test thoroughly on a demo account before live trading.
+
+Support
+For issues or questions, refer to the project documentation or contact supp
